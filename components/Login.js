@@ -19,7 +19,7 @@ const Login = ({navigation}) => {
     .then(() => {
         console.log('Logged in')
         setSignedIn(true)
-       navigation.replace('Journal')
+       navigation.replace('Scale')
     })
     .catch((error) => {console.log(error.message);
     setSignedIn(false)})

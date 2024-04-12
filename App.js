@@ -3,8 +3,8 @@ import { SafeAreaView, StyleSheet,Dimensions, Image,Text, TextInput, View, Butto
 import { NavigationContainer, useNavigationContainerRef } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import Login from './components/Login';
-import Journal from './components/Journal';
-import Assignment4 from './components/Assignment4';
+import Scale from './components/Scale';
+import Feel from './components/Feel';
 import {AntDesign,Entypo} from 'react-native-vector-icons';
 import { useState } from 'react';
 
@@ -28,8 +28,8 @@ export default function App() {
         }, 
       }}>
         <Stack.Screen name='Login' component={Login} options={{title: 'Login'}}/>
-        <Stack.Screen name='Journal' component={Journal} options={{title: 'Journal'}}/>
-        <Stack.Screen name='Assignment4' component={Assignment4} options={{title: 'Assignment4'}}/>
+        <Stack.Screen name='Scale' component={Scale} options={{title: 'Scale'}}/>
+        <Stack.Screen name='Feel' component={Feel} options={{title: 'Feel'}}/>
      </Stack.Navigator>
     </NavigationContainer>
   );

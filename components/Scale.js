@@ -3,20 +3,18 @@ import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import Slider from '@react-native-community/slider';
 import TickMarks from './TickMarks';
 
-const Journal = () => {
+const Scale = ({navigation}) => {
   const [sliderValue, setSliderValue] = useState(5);
-  const ticks = Array.from({ length: 11 }, (_, i) => i); // Create an array of 11 items for tick marks
+  const ticks = Array.from({ length: 10 }, (_, i) => i); // Create an array of 11 items for tick marks
 
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Rate your anxiety score for today</Text>
       <View style={styles.sliderContainer}>
-        {/* Render the tick marks */}
         <TickMarks ticks={ticks} sliderHeight={300} />
-        {/* Rotate the slider to make it vertical */}
         <Slider
           style={[styles.slider, { height: 300 }]}
-          minimumValue={0}
+          minimumValue={1}
           maximumValue={10}
           step={1}
           value={sliderValue}
@@ -28,12 +26,14 @@ const Journal = () => {
         />
       </View>
       <Text style={styles.score}>{sliderValue}</Text>
-      <TouchableOpacity style={styles.button} onPress={() => console.log('Next pressed')}>
+      <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('Feel')}>
         <Text style={styles.buttonText}>Next</Text>
       </TouchableOpacity>
     </View>
   );
 };
+
+export default Scale;
 
 const styles = StyleSheet.create({
   container: {
@@ -51,12 +51,11 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   slider: {
-    width: 300, // Slider length
-    // Add rotation transformation to make the slider vertical
+    width: 300,
   },
   ticksContainer: {
     position: 'relative',
-    height: 300, // Match slider height
+    height: 300,
     justifyContent: 'space-between',
   },
   tick: {
@@ -80,5 +79,3 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
 });
-
-export default Journal;
