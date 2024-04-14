@@ -19,7 +19,7 @@ const Login = ({navigation}) => {
     .then(() => {
         console.log('Logged in')
         setSignedIn(true)
-       navigation.navigate('Home')
+       navigation.navigate('Home', {email})
     })
     .catch((error) => {console.log(error.message);
     setSignedIn(false)})

@@ -1,14 +1,16 @@
 import { StyleSheet, SafeAreaView, TouchableOpacity, View, Text } from 'react-native'
 import React from 'react'
 
-const Home = ({navigation}) => {
+const Home = ({email , navigation}) => {
+    const mail = email
+    console.log("in home", mail)
   return (
     <SafeAreaView style={styles.container}>
         <View style={styles.buttons}>
             <TouchableOpacity style={styles.nav} onPress={() => navigation.navigate('Scale')}>
                 <Text>Journal</Text>
             </TouchableOpacity>
-            <TouchableOpacity style={styles.nav}>
+            <TouchableOpacity style={styles.nav} onPress={() => navigation.replace('MyTabs', {email})}>
                 <Text>Forum</Text>
             </TouchableOpacity>
         </View>
