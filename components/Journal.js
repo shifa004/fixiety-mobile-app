@@ -6,6 +6,8 @@ const screenWidth = Dimensions.get('window').width
 const screenHeight = Dimensions.get('window').height
 
 const Journal = ({ route, navigation }) => {
+  const {email, username}  = route.params;
+
   const [entry, setEntry] = useState('');
 
   const [disabled,setDisabled]=useState(true)
@@ -22,16 +24,16 @@ const Journal = ({ route, navigation }) => {
   }
 
   const handleJournal = () => {
-    navigation.navigate('JournalCalendar')
+    navigation.navigate('JournalCalendar', {score: route.params.anxietyScore, feel: route.params.feel, entry: entry},)
   }
 
   return (
     <KeyboardAvoidingView style={styles.container} behavior={Platform.OS == 'ios' ? "padding" : "height"}>     
         <View style={styles.close}>
-        <TouchableOpacity style={{marginLeft: screenWidth*0.05}} onPress={() => navigation.navigate({ name: 'Scale', params: { notes: entry }, merge: true })}>
+        <TouchableOpacity style={{marginLeft: screenWidth*0.05}} onPress={() => navigation.navigate({ name: 'Feel', params: { feel: route.params.feel }, merge: true })}>
             <AntDesign name='arrowleft' size={35}></AntDesign>
         </TouchableOpacity>
-        <TouchableOpacity style={{marginRight: screenWidth*0.05}} onPress={() => navigation.navigate('Home')}>
+        <TouchableOpacity style={{marginRight: screenWidth*0.05}} onPress={() => navigation.navigate('Home', {email: email, username: username})}>
             <AntDesign name='close' size={35}></AntDesign>
         </TouchableOpacity>
         </View>
