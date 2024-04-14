@@ -11,9 +11,9 @@ import { collection, doc, onSnapshot,setDoc } from "firebase/firestore";
 const screenWidth = Dimensions.get('window').width
 const screenHeight = Dimensions.get('window').height
 
-const CreateThread = ({ email, navigation }) => {
-    const {username} = email
-    console.log(email)
+const CreateThread = ({route, navigation }) => {
+    const username = route.params.email;
+    console.log(username)
     const [title, setTitle] = useState()
     const [detail, setDetail] = useState()
     const [replies, setReplies] = useState()
@@ -43,7 +43,7 @@ const CreateThread = ({ email, navigation }) => {
             ms: currentDate.getMilliseconds(),
             s: Math.floor(currentDate.getTime() / 1000)
         };
-        await setDoc(docRef, { username: email, detail: detail, title: title, date: timestamp, tags: tags }, { merge: true })
+        await setDoc(docRef, { username: username, detail: detail, title: title, date: timestamp, tags: tags }, { merge: true })
             .then(() => {
                 console.log('data submitted')
                 setTitle('')
