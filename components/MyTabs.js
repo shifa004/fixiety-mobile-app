@@ -8,7 +8,8 @@ import CreateThread from './CreateThread';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 const Tab = createMaterialTopTabNavigator();
-const MyTabs = ({email}) => {
+const MyTabs = ({route}) => {
+  const {email} = route.params;
     console.log("in tabs", email)
   return (
     

@@ -1,70 +1,70 @@
 import { StyleSheet, TextInput, View,TouchableOpacity,Text,KeyboardAvoidingView, Alert } from 'react-native'
 import React,{useEffect, useState} from 'react';
-import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
+import { createUserWithEmailAndPassword } from "firebase/auth";
+import { setDoc, doc } from "firebase/firestore";
 import { db, auth } from './config';
-import { doc, getDoc } from "firebase/firestore";
 
-const Login = ({navigation}) => {
-
+const Register = ({navigation}) => {
   useEffect(()=> setSignedIn(false),[])
   
   const [signedIn, setSignedIn] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [username, setUsername] = useState("");
   
   const handleRegister = () => {
-    navigation.navigate('Register')
-  }
-
-  const handleLogin = () => {
-    if (!email || !password) {
+    if (!email || !password || !username) {
         Alert.alert('Error', 'All fields are required');
         return;
     }
 
-    signInWithEmailAndPassword(auth, email, password)
+    createUserWithEmailAndPassword(auth, email, password)
     .then(async (userCredential) => {
+        console.log(userCredential)
         const user = userCredential.user;
         const userId = user.uid;
-        const docRef = doc(db, "accounts", userId);
-        const docSnap = await getDoc(docRef);
-        if (docSnap.exists()) {
-        console.log("Document data:", docSnap.data());
-        } else {
-        // doc.data() will be undefined in this case
-        console.log("No such document!");
-        }
-        console.log('Logged in')
-        setSignedIn(true)
-        navigation.navigate('Home', {email: docSnap.data().email, username: docSnap.data().username})
+
+        const docRef = doc(db, "accounts", userId)
+        await setDoc(docRef, {username: username, email: email}, {merge:true})
+        .then(() => { console.log('data submitted') })
+        .catch((error) => { console.log(error.message) })    
+
+        console.log("registered")
+        navigation.navigate("Login")
     })
-    .catch((error) => {console.log(error.message);
-    setSignedIn(false)})
+    .catch((error) => console.log(error.message))
+  }
+
+  const handleLogin = () => {
+    navigation.navigate('Login');
   }
   
   return (
     <KeyboardAvoidingView style={styles.container}>
       <View style={styles.inputContainer}>
+      <TextInput placeholder='Username' value={username} onChangeText={text =>  setUsername(text)} style={styles.input} autoCorrect={false} autoCapitalize={'none'}/>
         <TextInput placeholder='Email' value={email} onChangeText={text =>  setEmail(text)} style={styles.input} autoCorrect={false} autoCapitalize={'none'}/>
         <TextInput placeholder='Password' value={password} onChangeText={text =>  setPassword(text)} style={styles.input}secureTextEntry/>
       </View>
       <View>
       </View>
       <View style={styles.buttonContainer}>
-        <TouchableOpacity style={styles.button} onPress={handleLogin}>
-          <Text style={styles.buttonText}>Login</Text>
-        </TouchableOpacity>
-
-        <Text>Don't have an account?</Text>
+        
         <TouchableOpacity style={[styles.button, styles.buttonOutLine]} onPress={handleRegister}>
           <Text style={[styles.buttonText, styles.buttonOutLineText]}>Register</Text>
+        </TouchableOpacity>
+
+        <Text> Have an account?</Text>
+
+        <TouchableOpacity style={styles.button} onPress={handleLogin}>
+          <Text style={styles.buttonText}>Login</Text>
         </TouchableOpacity>
       </View>
     </KeyboardAvoidingView>
   )
 }
 
-export default Login
+export default Register
 
 const styles = StyleSheet.create({
   container: {

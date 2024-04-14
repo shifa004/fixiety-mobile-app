@@ -41,7 +41,7 @@ const ForumDetails = ({ route, navigation }) => {
                         {data.tags.map((x, i) => (
 
                        
-                            <View style={{ margin: 5 }}>
+                            <View key={i} style={{ margin: 5 }}>
                             <Tags data={x} key={i}/>
                             </View>
                         ))}

@@ -8,7 +8,7 @@ import {storage, db} from './config'
 const screenWidth = Dimensions.get('window').width
 const screenHeight = Dimensions.get('window').height
 
-const Forum = ({ email, navigation }) => {
+const Forum = ({ route, navigation }) => {
 
     useEffect(()=>{
         readAll()
@@ -42,7 +42,7 @@ const Forum = ({ email, navigation }) => {
         <ScrollView>
 
         {threads.map((x, i) => (
-            <TouchableOpacity onPress={() => navigation.navigate('ForumDetails',{x, i})}>
+            <TouchableOpacity key={i} onPress={() => navigation.navigate('ForumDetails',{x, i})}>
                 <Card width={"90%"} containerStyle={styles.card}>
                     <View style={styles.header}>
                         <Avatar size={screenWidth * 0.20} rounded source={picture} />
