@@ -12,8 +12,11 @@ const Home = ({route , navigation}) => {
   return (
     <SafeAreaView style={styles.container}>
         <View style={styles.buttons}>
-            <TouchableOpacity style={styles.nav} onPress={() => navigation.navigate('Scale')}>
+            <TouchableOpacity style={styles.nav} onPress={() => navigation.navigate('Scale',  {email: email, username: username})}>
                 <Text style={styles.txt}>Journal</Text>
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.nav} onPress={() => navigation.navigate('JournalCalendar')}>
+                <Text style={styles.txt}>Journal Entries</Text>
             </TouchableOpacity>
             <TouchableOpacity style={styles.nav} onPress={() => navigation.navigate('MyTabs', {email: email})}>
                 <Text style={styles.txt}>Forum</Text>
