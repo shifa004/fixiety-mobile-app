@@ -43,8 +43,7 @@ export default function App() {
         <Stack.Screen name='Journal' component={Journal} options={{title: 'Journal', headerShown:false}}/>
         <Stack.Screen name='Forum' component={Forum} options={{title: 'Forum'}}/>
         <Stack.Screen name='JournalCalendar' component={JournalCalendar} options={{
-          title: 'All Journal Entries',
-          headerTitleAlign: 'center'
+          headerShown: false
           }}/>
         <Stack.Screen name='Entry' component={Entry} options={{headerShown: false}}/>
         <Stack.Screen name='ForumDetails' component={ForumDetails} options={{title: 'Thread'}}/>

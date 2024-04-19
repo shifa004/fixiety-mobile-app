@@ -43,7 +43,7 @@ const Success = ({ visible, onClose }) => {
     <ModalPoup visible={visible}>
         <View style={{ alignItems: 'center' }}>
         <View style={styles.header}>
-          <TouchableOpacity onPress={onClose}> {/* Use the onClose function */}
+          <TouchableOpacity onPress={onClose}>
             <AntDesign name='close' size={35} />
           </TouchableOpacity>
         </View>
@@ -53,10 +53,11 @@ const Success = ({ visible, onClose }) => {
             style={{height: 150, width: 150, marginVertical: 10}}
           />
         </View>
-
+        <View>
         <Text style={{marginVertical: 30, fontSize: 20, textAlign: 'center'}}>
           Your Journal Entry was added!
         </Text>
+        </View>
         </View>
       </ModalPoup>
   );

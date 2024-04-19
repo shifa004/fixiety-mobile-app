@@ -8,21 +8,22 @@ import { MaterialCommunityIcons} from 'react-native-vector-icons';
 const screenWidth = Dimensions.get('window').width
 const screenHeight = Dimensions.get('window').height
 
-const JournalCalendar = ({navigation}) => {
+const JournalCalendar = ({route,navigation}) => {
   const [entries, setEntries] = useState([]);
-
   useEffect(() => {
-    readAll()
-    return () => {}
-  }, [])
+    readAll();
+  });
 
   const readAll = async () => {
     const docs = await getDocs(collection(db, "entries"));
-    const temp = [...entries]
+    const temp = []
     docs.forEach((doc) => {
-      console.log(doc.id)
-      console.log(doc.data())
-      temp.push(doc.data())     
+      let t = {}
+      t['date'] = doc.id
+      t['entry'] = doc.data().entry
+      t['feel'] = doc.data().feel
+      t['score'] = doc.data().score
+      temp.push(t)     
     });
     temp.sort((a, b) => parseDate(a.date) - parseDate(b.date));
     setEntries([...temp]);
@@ -50,12 +51,14 @@ const JournalCalendar = ({navigation}) => {
   const findEmojiByLabel = (label) => {
     return emojis.find(emoji => emoji.label.toLowerCase() === label.toLowerCase());
   };
+
   return (
     <SafeAreaView style ={styles.container}>
-      {console.log(entries)}
-      <ScrollView contentContainerStyle ={styles.all}>        
+      <ScrollView contentContainerStyle ={styles.all}> 
+      <View style={{alignItems:'center', marginTop: screenHeight*0.2}}>
+        <Text>All Journal Entries</Text>
+      </View>       
         {(entries.map((x, i) => {
-          console.log(entries)
           const e = findEmojiByLabel(x.feel);
           return (
           <TouchableOpacity key={i} onPress={() => navigation.navigate('Entry', {e: x})}>
