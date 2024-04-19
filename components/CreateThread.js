@@ -1,19 +1,19 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { View, Text, StyleSheet, Platform, TouchableOpacity, Image, TextInput, Dimensions, SafeAreaView, KeyboardAvoidingView, ScrollView, TouchableWithoutFeedback } from 'react-native';
 import { Card, Button } from '@rneui/themed';
 import { Avatar } from "@rneui/base";
 import { AntDesign, Entypo } from 'react-native-vector-icons'
-import {storage } from './config'
 import {ref, uploadBytesResumable, getDownloadURL} from 'firebase/storage'
 import * as ImagePicker from 'expo-image-picker';
-import { collection, doc, onSnapshot,setDoc } from "firebase/firestore";
+import {doc, setDoc,getDocs, collection, Timestamp, query, where} from "firebase/firestore";
+import {storage, db} from './config'
 
 const screenWidth = Dimensions.get('window').width
 const screenHeight = Dimensions.get('window').height
 
 const CreateThread = ({route, navigation }) => {
-    const username = route.params.email;
-    console.log(username)
+    const email = route.params.email;
+    const [username, setUsername] = useState()
     const [title, setTitle] = useState()
     const [detail, setDetail] = useState()
     const [replies, setReplies] = useState()
@@ -23,10 +23,17 @@ const CreateThread = ({route, navigation }) => {
     const [tags, setTags] = useState([])
     const [last, setLast] = useState()
     const [image, setImage] = useState()
-    const [fileName, setFileName] = useState()
+    const [fileName, setFileName] = useState('')
+    const [attached, setAttached] = useState(false)
+    useEffect(()=>{
+        getName()
+        readID()
+        return ()=>{}
+    }
+      ,) 
     const readID = async () => {
+        console.log("Rechec")
         const docs = await getDocs(collection(db, "threads"));
-        const temp = []
         let lastID;
         docs.forEach((doc) => {
             lastID = doc.id;
@@ -34,24 +41,46 @@ const CreateThread = ({route, navigation }) => {
         setLast(lastID)
     }
 
+const getName = async () => {
+    const q = query(collection(db, "accounts"), where("email", "==", email));
+    const docs = await getDocs(q);
+    let x = ''
+    docs.forEach((doc) => {
+    // doc.data() is never undefined for query doc snapshots
+    console.log(doc.id, " => ", doc.data());
+    x = doc.data().username
+    });
+    console.log(x)
+    setUsername(x)
+}
     const set = async () => {
-        readID()
-        const docRef = doc(db, "threads", last + 1)
-        await uploadImage();
-        const currentDate = new Date();
-        const timestamp = {
-            ms: currentDate.getMilliseconds(),
-            s: Math.floor(currentDate.getTime() / 1000)
-        };
-        await setDoc(docRef, { username: username, detail: detail, title: title, date: timestamp, tags: tags }, { merge: true })
+        console.log(username)
+        console.log(last)
+        const id = parseInt(last) + 1
+        const docRef = doc(db, "threads", id.toString())
+        if (fileName != ''){
+            await store();
+        }
+       
+        console.log("reached here")
+        let name = username;
+        console.log(name)
+        console.log({ name,  detail, title, tags, fileName})
+        await setDoc(docRef, { id:id.toString(), username: name, detail: detail, title: title, date: Timestamp.now(), tags: tags, filename: fileName , replies: []}, { merge: true })
             .then(() => {
                 console.log('data submitted')
                 setTitle('')
                 setDetail('')
-                setTags('')
+                setTags([])
+                setAttached(false)
+                setFileName('')
+                navigation.navigate('Forum', {check:Math.random()})
             })
             .catch((error) => { console.log(error.message) })
     }
+    const store = async()=>{
+        await uploadImage();
+   }
 
     const pickImage = async () => {
         let result = await ImagePicker.launchImageLibraryAsync({
@@ -61,7 +90,9 @@ const CreateThread = ({route, navigation }) => {
             setImage(result.assets[0].uri);
             // console.log(image)
             setFileName(result.assets[0].uri.substring(result.assets[0].uri.toString().lastIndexOf('/') + 1))
+            setAttached(true)
         };
+        
     }
 
     const uploadImage = async () => {
@@ -102,7 +133,7 @@ const CreateThread = ({route, navigation }) => {
                         <TouchableOpacity onPress={pickImage} style={styles.touchableOpacity}>
                             <View style={{ flexDirection: 'row' }}>
                                 <Entypo name='attachment' color='#01377D' size={15} style={{ marginRight: screenWidth * 0.01 }} />
-                                <Text style={{ color: '#01377D' }}>Attach</Text>
+                                <Text style={{ color: '#01377D' }}>{attached ? 'Attached' : 'Attach'}</Text>
                             </View>
                         </TouchableOpacity>
                     </View>
@@ -117,13 +148,13 @@ const CreateThread = ({route, navigation }) => {
                 </View>
                 <View style={{ flexDirection: 'row', flexWrap: 'wrap', marginTop: screenWidth * 0.03, marginLeft: screenWidth * 0.04 }}>
                     {tags.map((x, i) => (
-                        <View style={styles.tag} key={i} >
+                        <View style={styles.tag} key={i}>
                             <Text style={{ paddingLeft: 10, paddingRight: 10 }}>{x}</Text>
                             <AntDesign name='close' color='grey' size={13} style={{ marginRight: screenWidth * 0.02 }} onPress={() => remove(i)} />
                         </View>
                     ))}
                 </View>
-                <TouchableOpacity onPress={set} style={styles.end}>
+                <TouchableOpacity onPress={() => set()} style={styles.end}>
                     <Text style={{ color: 'white', fontWeight: 'bold', }}>Create</Text>
                 </TouchableOpacity>
 

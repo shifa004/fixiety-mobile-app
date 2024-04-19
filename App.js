@@ -34,6 +34,7 @@ export default function App() {
         //   color: 'black',
         //   justifyContent: 'center'
         // }, 
+
       }}>
         <Stack.Screen name='Login' component={Login} options={{title: 'Login'}}/>
         <Stack.Screen name='Register' component={Register} options={{title: 'Register'}}/>
@@ -48,8 +49,8 @@ export default function App() {
           }}/>
         <Stack.Screen name='Entry' component={Entry} options={{headerShown: false}}/>
         <Stack.Screen name='ForumDetails' component={ForumDetails} options={{title: 'Thread'}}/>
-        <Stack.Screen name='CreateThread' component={CreateThread} options={{title: 'Create'}}/>
-        <Stack.Screen name="MyTabs" component={MyTabs} options={{headerShown:false}}/>
+        <Stack.Screen name='CreateThread' component={CreateThread} options={{title: 'Create',  headerShown:false}}/>
+        <Stack.Screen name="MyTabs" component={MyTabs} options={{headerShown:false, title: 'Forum'}}/>
      </Stack.Navigator>
     </NavigationContainer>
   );
