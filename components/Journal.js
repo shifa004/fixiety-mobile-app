@@ -115,7 +115,6 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems:'center',
     padding: screenWidth*0.05,
-
     // justifyContent: 'center',
   },
   close: {

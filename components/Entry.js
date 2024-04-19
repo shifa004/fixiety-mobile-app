@@ -1,8 +1,10 @@
-import { StyleSheet, SafeAreaView, TouchableOpacity, View, Text, Dimensions } from 'react-native'
+import { StyleSheet, SafeAreaView, TouchableOpacity, View, Text, Dimensions, ScrollView } from 'react-native'
 import React from 'react'
 import { useEffect } from 'react';
 import { MaterialCommunityIcons} from 'react-native-vector-icons';
 import {AntDesign} from 'react-native-vector-icons';
+import {doc, deleteDoc, collection} from "firebase/firestore";
+import { db } from './config';
 
 const screenWidth = Dimensions.get('window').width
 const screenHeight = Dimensions.get('window').height
@@ -38,14 +40,20 @@ const Entry = ({route, navigation}) => {
 
     const emo = findEmojiByLabel(ent.feel)
 
+    const deleteEntry = async () => {
+      const entryDoc = doc(db, 'entries', ent.date)
+      await deleteDoc(entryDoc)
+      navigation.navigate("JournalCalendar")
+    }
     return (
     <SafeAreaView style ={styles.container}>
+      <ScrollView contentContainerStyle ={styles.all}>        
       <View style={styles.close}>
       <TouchableOpacity style={{marginLeft: screenWidth*0.05}} onPress={() => navigation.navigate('JournalCalendar')}>
           <AntDesign name='arrowleft' size={35}></AntDesign>
         </TouchableOpacity>
         <Text>{formatDate(ent.date)}</Text>
-        <TouchableOpacity style={{marginRight: screenWidth*0.05}} onPress={() => navigation.navigate('Home', {email: email, username: username})}>
+        <TouchableOpacity style={{marginRight: screenWidth*0.05}} onPress={() => deleteEntry()}>
           <AntDesign name='delete' size={35}></AntDesign>
         </TouchableOpacity>
       </View>
@@ -59,6 +67,7 @@ const Entry = ({route, navigation}) => {
       <View style={styles.inputContainer}>
         <Text style={styles.inputText}>{ent.entry}</Text>
       </View>
+      </ScrollView>
     </SafeAreaView>
   )
 }
@@ -68,7 +77,6 @@ export default Entry
 const styles = StyleSheet.create({
   container: {
     flex:1,
-    justifyContent: 'center',
   },
   close: {
     marginTop: screenHeight*0.05,
@@ -83,7 +91,7 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     padding: 20,
     margin: screenWidth*0.08,
-    height:'50%'
+    height: screenHeight*0.6
   },
   inputText: {
     fontSize: 16,
