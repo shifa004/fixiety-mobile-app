@@ -1,16 +1,18 @@
 import React, { useState } from 'react';
-import { View, TextInput, StyleSheet, Button, SafeAreaView, Dimensions, TouchableOpacity, Text, KeyboardAvoidingView, Platform } from 'react-native';
+import { View, TextInput, StyleSheet, Button, SafeAreaView, Dimensions, TouchableOpacity, Text, KeyboardAvoidingView, Platform, ScrollView } from 'react-native';
 import {AntDesign} from 'react-native-vector-icons';
+import {doc, setDoc, addDoc, collection} from "firebase/firestore";
+import { db } from './config';
+import Success from './Success';
 
 const screenWidth = Dimensions.get('window').width
 const screenHeight = Dimensions.get('window').height
 
 const Journal = ({ route, navigation }) => {
   const {email, username}  = route.params;
-
   const [entry, setEntry] = useState('');
-
-  const [disabled,setDisabled]=useState(true)
+  const [disabled,setDisabled]=useState(true);
+  const [isModalVisible, setModalVisible] = useState(false);
 
   const changeInput = (e) => {
     if (e === '') {
@@ -23,16 +25,67 @@ const Journal = ({ route, navigation }) => {
     }
   }
 
-  const handleJournal = () => {
-    navigation.navigate('JournalCalendar', {score: route.params.anxietyScore, feel: route.params.feel, entry: entry},)
+  const getCurrentDate = () => {
+    const days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+    const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+    
+    var now = new Date();
+    var dayOfWeek = days[now.getDay()];
+    var date = now.getDate(); 
+    var month = months[now.getMonth()];
+    var year = now.getFullYear();
+
+    return `${dayOfWeek}, ${date} ${month} ${year}`;
+  };
+
+  const formatDate=()=>{ 
+    var date = new Date().getDate();
+    var month = new Date().getMonth() + 1;
+    var year = new Date().getFullYear();
+    return date + '-' + month + '-' + year;
   }
 
+  const mySet = async() => {
+    const docRef = doc(db, "users", studentId)
+    await setDoc(docRef, { name: name, GPA: GPA, }, {merge:true})
+    .then(() => { console.log('data submitted') 
+    setStudentID('')
+    setName('')
+    setGPA('')})
+    .catch((error) => { console.log(error.message) })        
+}
+
+  async function addEntry() {
+      const currentDate = formatDate();
+      const docRef = doc(db, "entries", currentDate)
+      await setDoc(docRef, {
+        score: route.params.anxietyScore,
+        feel: route.params.feel,
+        entry: entry,
+      }, {merge: true})
+      .then(()=> console.log("Document written with ID: ", docRef.id))
+      .catch((error) => {
+          console.error("Error adding document: ", error);
+      })
+  }
+  
+  const handleJournal = async () => {
+    await addEntry(); 
+    setModalVisible(true);
+  };
+
+  const closeModal = () => {
+    setModalVisible(false);
+    navigation.navigate('JournalCalendar')
+  };
+
   return (
-    <KeyboardAvoidingView style={styles.container} behavior={Platform.OS == 'ios' ? "padding" : "height"}>     
+    <KeyboardAvoidingView style={styles.container} behavior={Platform.OS == 'ios' ? "padding" : "height"}>  
         <View style={styles.close}>
         <TouchableOpacity style={{marginLeft: screenWidth*0.05}} onPress={() => navigation.navigate({ name: 'Feel', params: { feel: route.params.feel }, merge: true })}>
             <AntDesign name='arrowleft' size={35}></AntDesign>
         </TouchableOpacity>
+        <Text>{getCurrentDate()}</Text>
         <TouchableOpacity style={{marginRight: screenWidth*0.05}} onPress={() => navigation.navigate('Home', {email: email, username: username})}>
             <AntDesign name='close' size={35}></AntDesign>
         </TouchableOpacity>
@@ -47,9 +100,10 @@ const Journal = ({ route, navigation }) => {
                 onChangeText={(e) => changeInput(e)}
             />
         </View>
-        <TouchableOpacity style={[styles.button, {backgroundColor: disabled? 'white': 'lightgrey'}]} disabled={disabled} onPress={() => handleJournal()}>
-          <Text style={[styles.buttonText, {color: disabled? 'darkgrey': 'black'} ]}>Next</Text>
-        </TouchableOpacity>    
+        <TouchableOpacity style={[styles.button, { backgroundColor: disabled ? 'white' : 'lightgrey' }]} disabled={disabled} onPress={handleJournal}>
+          <Text style={[styles.buttonText, { color: disabled ? 'darkgrey' : 'black' }]}>Next</Text>
+        </TouchableOpacity>
+        <Success visible={isModalVisible} onClose={closeModal} />
       </KeyboardAvoidingView>
   );
 };
@@ -61,6 +115,7 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems:'center',
     padding: screenWidth*0.05,
+
     // justifyContent: 'center',
   },
   close: {

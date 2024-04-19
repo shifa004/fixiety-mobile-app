@@ -2,12 +2,12 @@ import { StyleSheet, SafeAreaView, TouchableOpacity, View, Text, Dimensions } fr
 import React from 'react'
 import { useEffect } from 'react';
 
-
 const screenWidth = Dimensions.get('window').width
 const screenHeight = Dimensions.get('window').height
 
 const Home = ({route , navigation}) => {
-    const {email, username}  = route.params;
+    const email = route.params?.email;
+    const username = route.params?.username;
     console.log("in home", email, username)
   return (
     <SafeAreaView style={styles.container}>
