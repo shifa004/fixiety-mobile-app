@@ -34,19 +34,19 @@ export default function App() {
         //   color: 'black',
         //   justifyContent: 'center'
         // }, 
-        headerShown:false
+       
       }}>
-        <Stack.Screen name='Login' component={Login} options={{title: 'Login'}}/>
-        <Stack.Screen name='Register' component={Register} options={{title: 'Register'}}/>
-        <Stack.Screen name='Home' component={Home} options={{title: 'Home'}}/>
-        <Stack.Screen name='Scale' component={Scale} options={{title: 'Scale'}}/>
-        <Stack.Screen name='Feel' component={Feel} options={{title: 'Feel'}}/>
-        <Stack.Screen name='Journal' component={Journal} options={{title: 'Journal'}}/>
+        <Stack.Screen name='Login' component={Login} options={{title: 'Login',  headerShown:false}}/>
+        <Stack.Screen name='Register' component={Register} options={{title: 'Register',  headerShown:false}}/>
+        <Stack.Screen name='Home' component={Home} options={{title: 'Home',  headerShown:false}}/>
+        <Stack.Screen name='Scale' component={Scale} options={{title: 'Scale',  headerShown:false}}/>
+        <Stack.Screen name='Feel' component={Feel} options={{title: 'Feel',  headerShown:false}}/>
+        <Stack.Screen name='Journal' component={Journal} options={{title: 'Journal',  headerShown:false}}/>
         <Stack.Screen name='Forum' component={Forum} options={{title: 'Forum'}}/>
-        <Stack.Screen name='JournalCalendar' component={JournalCalendar} options={{title: 'JournalCalendar'}}/>
+        <Stack.Screen name='JournalCalendar' component={JournalCalendar} options={{title: 'JournalCalendar',  headerShown:false}}/>
         <Stack.Screen name='ForumDetails' component={ForumDetails} options={{title: 'Thread'}}/>
-        <Stack.Screen name='CreateThread' component={CreateThread} options={{title: 'Create'}}/>
-        <Stack.Screen name="MyTabs" component={MyTabs} options={{headerShown:false}}/>
+        <Stack.Screen name='CreateThread' component={CreateThread} options={{title: 'Create',  headerShown:false}}/>
+        <Stack.Screen name="MyTabs" component={MyTabs} options={{headerShown:false, title: 'Forum'}}/>
      </Stack.Navigator>
     </NavigationContainer>
   );

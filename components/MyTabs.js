@@ -10,14 +10,13 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 const Tab = createMaterialTopTabNavigator();
 const MyTabs = ({route}) => {
   const {email} = route.params;
-    console.log("in tabs", email)
   return (
     
 <SafeAreaView style={styles.container}>
     <Tab.Navigator screenOptions={{headerShown:true,
     tabBarActiveTintColor: 'grey'}}>
     
-    <Tab.Screen name="Forum" component={Forum} />
+    <Tab.Screen name="Forum" component={Forum} initialParams={{check:'peekaboo', email:email}} />
     <Tab.Screen name="Create" component={CreateThread} 
      initialParams={{email:email}}/>
   </Tab.Navigator>
