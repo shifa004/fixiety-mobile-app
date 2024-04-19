@@ -3,7 +3,6 @@ import { View, Text, StyleSheet, TouchableOpacity, Dimensions, SafeAreaView } fr
 import { MaterialCommunityIcons} from 'react-native-vector-icons';
 import {AntDesign} from 'react-native-vector-icons';
 
-
 const screenWidth = Dimensions.get('window').width
 const screenHeight = Dimensions.get('window').height
 
@@ -12,13 +11,26 @@ const Feel = ({route, navigation}) => {
     console.log(anxietyScore)
   }, [])
 
-  const [selectedEmoji, setSelectedEmoji] = useState('');
+  const getCurrentDate=()=>{
+ 
+    var date = new Date().getDate();
+    var month = new Date().getMonth() + 1;
+    var year = new Date().getFullYear();
+
+    //Alert.alert(date + '-' + month + '-' + year);
+    // You can turn it in to your desired format
+    return date + '-' + month + '-' + year;//format: d-m-y;
+  }
+
+  const {email, username}  = route.params;
+
+  const [selectedEmoji, setSelectedEmoji] = useState(() => route.params?.feel? route.params.feel: "");
   const anxietyScore = route.params.anxietyScore
 
   const emojis = [
-    { name: 'emoticon-happy-outline', label: 'Happy' },
-    { name: 'emoticon-neutral-outline', label: 'Neutral' },
-    { name: 'emoticon-sad-outline', label: 'Sad' },
+    { name: 'emoticon-happy-outline', label: 'Happy', color: "green" },
+    { name: 'emoticon-neutral-outline', label: 'Neutral', color: "grey" },
+    { name: 'emoticon-sad-outline', label: 'Sad', color: "red"},
   ];
 
   const [disabled,setDisabled]=useState(true)
@@ -39,14 +51,14 @@ const Feel = ({route, navigation}) => {
       <TouchableOpacity style={{marginLeft: screenWidth*0.05}} onPress={() => navigation.navigate({ name: 'Scale', params: { anxietyScore: anxietyScore }, merge: true })}>
           <AntDesign name='arrowleft' size={35}></AntDesign>
         </TouchableOpacity>
-        <TouchableOpacity style={{marginRight: screenWidth*0.05}} onPress={() => navigation.navigate('Home')}>
+        <TouchableOpacity style={{marginRight: screenWidth*0.05}} onPress={() => navigation.navigate('Home', {email: email, username: username})}>
           <AntDesign name='close' size={35}></AntDesign>
         </TouchableOpacity>
       </View>
       <Text style={styles.title}>How did you feel in general today?</Text>
       {emojis.map((e, i) => (
         <TouchableOpacity key={i} style={styles.emojiButton} onPress={() => chooseEmoji(e)}>
-          <MaterialCommunityIcons name={e.name} size={125} color={selectedEmoji === e.label ? 'pink' : 'black'}/>
+          <MaterialCommunityIcons name={e.name} size={125} color={selectedEmoji === e.label ? e.color : 'black'}/>
         </TouchableOpacity>
       ))}
        <TouchableOpacity style={[styles.button, {backgroundColor: disabled? 'white': 'lightgrey'}]} disabled={disabled} onPress={() => handleFeel()}>
