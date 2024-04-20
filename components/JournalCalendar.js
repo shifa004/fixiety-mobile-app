@@ -5,7 +5,6 @@ import { db, auth } from './config';
 import {Card, Avatar } from '@rneui/themed';
 import { MaterialCommunityIcons} from 'react-native-vector-icons';
 
-// Suppress specific warnings
 LogBox.ignoreAllLogs();
 
 const screenWidth = Dimensions.get('window').width
@@ -27,7 +26,7 @@ const JournalCalendar = ({route,navigation}) => {
         setCurrentUser(null);
       }
     });  return () => unsubscribe();
-  }, []);
+  });
   
   useEffect(()=>{
     getName()
@@ -77,7 +76,6 @@ const JournalCalendar = ({route,navigation}) => {
     }
   };
   
-  
   const getCurrentDate = () => { 
     var date = new Date().getDate();
     var month = new Date().getMonth() + 1;
@@ -102,17 +100,18 @@ const JournalCalendar = ({route,navigation}) => {
 
   return (
     <SafeAreaView style ={styles.container}>
-      <ScrollView contentContainerStyle ={styles.all}>
+      <ScrollView contentContainerStyle={styles.all}>
+        {/* {console.log(todayEntryExists)} */}
       <TouchableOpacity
-          style={styles.logButton}
+          style={[styles.logButton, { backgroundColor: todayEntryExists? 'white' : '#01377D' }]}
           onPress={() => {
             if (!todayEntryExists) {
-              navigation.navigate('Scale'); // Assuming 'Scale' is the name of your component to log an entry
+              navigation.navigate('Scale');
             }
           }}
           disabled={todayEntryExists}
         >
-        <Text style={[styles.logButtonText, {color: todayEntryExists ? 'grey' : 'black',}]}>Log Today's Mood</Text>
+        <Text style={[styles.logButtonText, {color: todayEntryExists ? 'grey' : 'white',}]}>Log Today's Mood</Text>
         </TouchableOpacity>
         {(entries.map((x, i) => {
           const e = findEmojiByLabel(x.feel);
@@ -146,22 +145,28 @@ const styles = StyleSheet.create({
   container: {
     flex:1,
     justifyContent: 'center',
+    color: 'white'
+  },
+  all: {
+    flexGrow: 1,
+    color: 'white'
   },
   fields: {
     alignItems:'center',
   },
   date: {
-    fontSize: screenWidth*0.05,
+    fontSize: screenWidth*0.04,
   },
   entry: {
-    borderRadius: 10,
     margin: screenHeight*0.02,
-    shadowColor: '#171717',
     shadowOffset: {width: -2, height: 4},
-    shadowOpacity: 0.2,
-    shadowRadius: 3,
-    backgroundColor: "white",
+    backgroundColor: "#e8effa",
+    borderRadius: 15,
     padding: screenHeight*0.02,
+    shadowColor: 'black',
+    shadowOpacity: 0.3,
+    shadowRadius: 6,
+    elevation: 14,
   },
   content: {
     flexDirection:'row',
@@ -174,13 +179,11 @@ const styles = StyleSheet.create({
     fontSize: screenWidth*0.04
   },
   logButton: {
-    width: screenWidth - 40, // Subtracts the margins on the left and right
-    backgroundColor: '#e0e0e0', // Placeholder color
     alignItems: 'center',
     justifyContent: 'center',
-    padding: 10,
+    padding: screenHeight*0.021,
     borderRadius: 5,
-    margin: 20,
+    margin: screenHeight*0.025,
   },
   logButtonText: {
     fontWeight: 'bold',

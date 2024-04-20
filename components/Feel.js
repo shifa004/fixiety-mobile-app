@@ -12,11 +12,9 @@ const Feel = ({route, navigation}) => {
   // }, [])
 
   const getCurrentDate=()=>{
- 
     var date = new Date().getDate();
     var month = new Date().getMonth() + 1;
     var year = new Date().getFullYear();
-
     return date + '-' + month + '-' + year;//format: d-m-y;
   }
 
@@ -56,11 +54,11 @@ const Feel = ({route, navigation}) => {
       <Text style={styles.title}>How did you feel in general today?</Text>
       {emojis.map((e, i) => (
         <TouchableOpacity key={i} style={styles.emojiButton} onPress={() => chooseEmoji(e)}>
-          <MaterialCommunityIcons name={e.name} size={125} color={selectedEmoji === e.label ? e.color : 'black'}/>
+          <MaterialCommunityIcons name={e.name} size={125} color={selectedEmoji === e.label ? e.color : '#01377D'}/>
         </TouchableOpacity>
       ))}
-       <TouchableOpacity style={[styles.button, {backgroundColor: disabled? 'white': 'lightgrey'}]} disabled={disabled} onPress={() => handleFeel()}>
-        <Text style={[styles.buttonText, {color: disabled? 'darkgrey': 'black'} ]}>Next</Text>
+       <TouchableOpacity style={[styles.button, {backgroundColor: disabled? 'white': '#01377D'}]} disabled={disabled} onPress={() => handleFeel()}>
+        <Text style={[styles.buttonText, {color: disabled? 'darkgrey': 'white'} ]}>Next</Text>
       </TouchableOpacity>
     </SafeAreaView>
   );
@@ -87,19 +85,20 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     fontSize: screenWidth*0.06,
     marginBottom: screenHeight*0.03,
+    color: "#01377D"
   },
   emojiButton: {
     marginBottom: screenHeight*0.055,
   },
   button: {
-    backgroundColor: '#E0E0E0',
     width: screenWidth*0.25,
     height: screenHeight*0.07,
-    borderRadius: 5,
     justifyContent: 'center',
-    alignItems: 'center'
+    alignItems: 'center',
+    borderRadius: 10,
   },
   buttonText: {
-    fontSize: screenWidth*0.056
-  }
+    color: 'white',    
+    fontSize: screenWidth*0.045,
+  },
 });

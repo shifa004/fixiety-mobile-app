@@ -19,7 +19,7 @@ const Scale = ({route, navigation}) => {
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.close}>
-        <TouchableOpacity style={{marginRight: screenWidth*0.05}}onPress={() => navigation.navigate('Home', {email: email})}>
+        <TouchableOpacity style={{marginRight: screenWidth*0.05}}onPress={() => navigation.navigate('JournalCalendar', {email: email})}>
           <AntDesign name='close' size={35}></AntDesign>
         </TouchableOpacity>
       </View>
@@ -34,13 +34,13 @@ const Scale = ({route, navigation}) => {
           step={1}
           value={sliderValue}
           onValueChange={(value) => setSliderValue(value)}
-          minimumTrackTintColor="#000000"
+          minimumTrackTintColor="#01377D"
           maximumTrackTintColor="#000000"
           vertical="true"
           track
-          thumbTintColor="#000000"
+          // thumbTintColor="#000000"
           thumbImage={require('../assets/thumbimage.png')}
-          transform={[{ rotate: '-90deg' }]} // Rotate the slider to vertical
+          transform={[{ rotate: '-90deg' }]}
         />
       </View>
       <Text style={styles.desc}>1 = No Anxiety, 10 = Extreme Anxiety</Text>
@@ -66,6 +66,7 @@ const styles = StyleSheet.create({
     marginBottom: screenHeight*0.03
   },
   title: {
+    color: '#01377D',
     textAlign: 'center',
     fontSize: screenWidth*0.06,
     marginBottom: screenHeight*0.03,
@@ -75,37 +76,40 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   slider: {
-    // height: screenHeight*0.48,
-    // width: screenHeight*0.48,
-    height: screenHeight*0.3,
-    width: screenHeight*0.3,
+    height: screenHeight*0.48,
+    width: screenHeight*0.48,
+    // height: screenHeight*0.3,
+    // width: screenHeight*0.3,
     marginBottom: screenHeight*0.02
   },
   scoreBg: {
-   backgroundColor: 'lightgrey',
+   backgroundColor: 'lightblue',
    borderRadius: 50,
    width: screenWidth*0.16,
    height: screenWidth*0.16,
    justifyContent: 'center',
    alignItems:'center',
-   marginBottom: screenHeight*0.02
+   marginBottom: screenHeight*0.02,
   },
   score: {
     fontSize: screenWidth*0.07,
+    color: "#01377D"
   },
   desc: {
+    color: "#01377D",
     fontSize: screenWidth*0.035,
     marginBottom : screenHeight*0.02
   },
   button: {
-    backgroundColor: '#E0E0E0',
+    backgroundColor: '#01377D',
     width: screenWidth*0.25,
     height: screenHeight*0.07,
-    borderRadius: 5,
     justifyContent: 'center',
-    alignItems: 'center'
+    alignItems: 'center',
+    borderRadius: 10,
   },
   buttonText: {
-    fontSize: screenWidth*0.056
+    color: 'white',    
+    fontSize: screenWidth*0.045,
   },
 });

@@ -40,14 +40,14 @@ const styles = StyleSheet.create({
     marginBottom: screenHeight*0.02,
   },
   tagline: {
-    fontSize: 18,
+    fontSize: screenWidth*0.045,
     color: '#01377D',
     marginBottom: screenHeight*0.04,
   },
   image: {
     width: screenWidth*0.9,
     height: screenHeight*0.25,
-    marginBottom: 20,
+    marginBottom: screenHeight*0.03,
   },
   button: {
     height: screenHeight*0.07,

@@ -46,7 +46,6 @@ const getName = async () => {
     const docs = await getDocs(q);
     let x = ''
     docs.forEach((doc) => {
-    // doc.data() is never undefined for query doc snapshots
     console.log(doc.id, " => ", doc.data());
     x = doc.data().username
     });

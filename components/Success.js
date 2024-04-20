@@ -54,7 +54,7 @@ const Success = ({ visible, onClose }) => {
           />
         </View>
         <View>
-        <Text style={{marginVertical: 30, fontSize: 20, textAlign: 'center'}}>
+        <Text style={{marginVertical: 30, fontSize: 18, textAlign: 'center'}}>
           Your Journal Entry was added!
         </Text>
         </View>

@@ -50,7 +50,7 @@ const Entry = ({route, navigation}) => {
       <TouchableOpacity style={{marginLeft: screenWidth*0.05}} onPress={() => navigation.navigate('JournalCalendar')}>
           <AntDesign name='arrowleft' size={35}></AntDesign>
         </TouchableOpacity>
-        <Text>{formatDate(ent.date)}</Text>
+        <Text style={{color: "#01377D"}}>{formatDate(ent.date)}</Text>
         <TouchableOpacity style={{marginRight: screenWidth*0.05}} onPress={() => deleteEntry()}>
           <AntDesign name='delete' size={35}></AntDesign>
         </TouchableOpacity>
@@ -59,8 +59,8 @@ const Entry = ({route, navigation}) => {
         <MaterialCommunityIcons name={emo.name}  color={emo.color} size={130}/> 
       </View>
       <View style={{alignItems:'center'}}>
-        <Text>Your Journal Entry</Text>
-        <Text>Anxiety Score on this Day: {ent.score}</Text>
+        <Text style={{color: '#01377D'}}>Your Journal Entry</Text>
+        <Text style={{color: '#01377D'}}>Anxiety Score on this Day: {ent.score}</Text>
       </View>
       <View style={styles.inputContainer}>
         <Text style={styles.inputText}>{ent.entry}</Text>
@@ -74,7 +74,9 @@ export default Entry
 
 const styles = StyleSheet.create({
   container: {
+    marginTop: screenWidth*0.05,
     flex:1,
+    backgroundColor: 'white'
   },
   close: {
     marginTop: screenHeight*0.05,
@@ -85,14 +87,15 @@ const styles = StyleSheet.create({
     marginBottom: screenHeight*0.03
   },
   inputContainer: {
-    backgroundColor: 'lightgrey',
+    backgroundColor: '#e8effa',
     borderRadius: 20,
-    padding: 20,
+    padding: screenHeight*0.03,
     margin: screenWidth*0.08,
     minHeight: screenHeight*0.6,
-    textAlign:'justify'
   },
   inputText: {
-    fontSize: 16,
+    fontSize: screenWidth*0.04,
+    color: '#3C3C3C',
+    textAlign:'justify'
   },
 })

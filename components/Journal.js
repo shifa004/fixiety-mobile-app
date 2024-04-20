@@ -108,8 +108,8 @@ const Journal = ({ route, navigation }) => {
         <TouchableOpacity style={{marginLeft: screenWidth*0.05}} onPress={() => navigation.navigate({ name: 'Feel', params: { feel: route.params.feel }, merge: true })}>
             <AntDesign name='arrowleft' size={35}></AntDesign>
         </TouchableOpacity>
-        <Text>{getCurrentDate()}</Text>
-        <TouchableOpacity style={{marginRight: screenWidth*0.05}} onPress={() => navigation.navigate('Home', {email: email})}>
+        <Text style={{color: "#01377D"}}>{getCurrentDate()}</Text>
+        <TouchableOpacity style={{marginRight: screenWidth*0.05}} onPress={() => navigation.navigate('Home')}>
             <AntDesign name='close' size={35}></AntDesign>
         </TouchableOpacity>
         </View>
@@ -123,8 +123,8 @@ const Journal = ({ route, navigation }) => {
                 onChangeText={(e) => changeInput(e)}
             />
         </View>
-        <TouchableOpacity style={[styles.button, { backgroundColor: disabled ? 'white' : 'lightgrey' }]} disabled={disabled} onPress={handleJournal}>
-          <Text style={[styles.buttonText, { color: disabled ? 'darkgrey' : 'black' }]}>Next</Text>
+        <TouchableOpacity style={[styles.button, { backgroundColor: disabled ? 'white' : '#01377D' }]} disabled={disabled} onPress={handleJournal}>
+          <Text style={[styles.buttonText, { color: disabled ? 'darkgrey' : 'white' }]}>Next</Text>
         </TouchableOpacity>
         <Success visible={isModalVisible} onClose={closeModal} />
       </KeyboardAvoidingView>
@@ -138,7 +138,6 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems:'center',
     padding: screenWidth*0.05,
-    // justifyContent: 'center',
   },
   close: {
     marginTop: screenHeight*0.05,
@@ -149,6 +148,7 @@ const styles = StyleSheet.create({
     marginBottom: screenHeight*0.03
   },
   title: {
+    color: "#01377D",
     textAlign: 'center',
     fontSize: screenWidth*0.05,
     marginBottom: screenHeight*0.03,
@@ -162,7 +162,7 @@ const styles = StyleSheet.create({
   textInput: {
     borderWidth: 1,
     borderRadius: 20,
-    borderColor: 'gray',
+    borderColor: '#01377D',
     backgroundColor: 'white',
     padding: screenWidth*0.05,
     height: '100%',
@@ -170,14 +170,14 @@ const styles = StyleSheet.create({
     textAlignVertical: 'top',
   },
   button: {
-    backgroundColor: '#E0E0E0',
     width: screenWidth*0.25,
     height: screenHeight*0.07,
-    borderRadius: 5,
     justifyContent: 'center',
-    alignItems: 'center'
+    alignItems: 'center',
+    borderRadius: 10,
   },
   buttonText: {
-    fontSize: screenWidth*0.056
-  }
+    color: 'white',    
+    fontSize: screenWidth*0.045,
+  },
 });

@@ -18,6 +18,7 @@ import Entry from './components/Entry';
 import {AntDesign,Entypo} from 'react-native-vector-icons';
 import { useState } from 'react';
 import MyDrawer from './components/MyDrawer';
+import Settings from './components/Settings';
 
 const screenWidth = Dimensions.get('window').width
 const screenHeight = Dimensions.get('window').height
@@ -54,6 +55,7 @@ export default function App() {
         <Stack.Screen name='ForumDetails' component={ForumDetails} options={{title: 'Thread'}}/>
         <Stack.Screen name='CreateThread' component={CreateThread} options={{title: 'Create',  headerShown:false}}/>
         <Stack.Screen name="MyTabs" component={MyTabs} options={{headerShown:false, title: 'Forum'}}/>
+        <Stack.Screen name="Settings" component={Settings} options={{title: 'Settings'}}/>
      </Stack.Navigator>
     </NavigationContainer>
   );

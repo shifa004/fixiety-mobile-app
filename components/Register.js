@@ -49,7 +49,7 @@ const Register = ({navigation}) => {
     <KeyboardAvoidingView behavior={Platform.OS == 'ios' ? "padding" : "height"} style={styles.container}>
       <View style={styles.headerContainer}>
         <Image
-          source={require('../assets/register.png')} // Replace with your graphic image path
+          source={require('../assets/register.png')}
           style={styles.headerGraphic}
         />
         <Text style={styles.title}>Get Started</Text>
@@ -157,11 +157,12 @@ const styles = StyleSheet.create({
   },
   footerText: {
     color: '#666',
-    fontSize: 14,
+    fontSize: screenWidth*0.035,
   },
   loginText: {
     color: '#01377D',
     fontWeight: 'bold',
+    fontSize: screenWidth*0.035,
   },
   button: {
     width: screenWidth*0.8,
