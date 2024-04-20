@@ -1,7 +1,7 @@
 import React from 'react';
 import { StyleSheet, View, Text, TouchableOpacity, SectionList, SafeAreaView, Dimensions } from 'react-native';
 import {AntDesign,Entypo, FontAwesome, MaterialIcons} from 'react-native-vector-icons';
-
+import UserProfile from './components/UserProfile';
 const screenWidth = Dimensions.get('window').width
 const screenHeight = Dimensions.get('window').height
 
@@ -9,7 +9,7 @@ const settings = [
     {
       title: 'Account',
       data: [
-        { name: 'Edit profile', icon: 'user', iconType: AntDesign, component: "EditProfile" },
+        { name: 'Edit profile', icon: 'user', iconType: AntDesign, component: "UserProfile" },
       ],
     },
     {
