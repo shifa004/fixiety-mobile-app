@@ -9,7 +9,8 @@ const screenWidth = Dimensions.get('window').width
 const screenHeight = Dimensions.get('window').height
 
 const Forum = ({ route, navigation }) => {
-    const email = route.params.email;
+    const email = route.params?.email;
+    const user = route.params?.username;
     // useEffect(()=>{
     //     readAll()
     //     return ()=>{}
