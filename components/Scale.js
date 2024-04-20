@@ -36,6 +36,7 @@ const Scale = ({route, navigation}) => {
           onValueChange={(value) => setSliderValue(value)}
           minimumTrackTintColor="#000000"
           maximumTrackTintColor="#000000"
+          vertical="true"
           track
           thumbTintColor="#000000"
           thumbImage={require('../assets/thumbimage.png')}
@@ -74,8 +75,10 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   slider: {
-    height: screenHeight*0.48,
-    width: screenHeight*0.48,
+    // height: screenHeight*0.48,
+    // width: screenHeight*0.48,
+    height: screenHeight*0.3,
+    width: screenHeight*0.3,
     marginBottom: screenHeight*0.02
   },
   scoreBg: {
