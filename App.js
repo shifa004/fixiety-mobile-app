@@ -15,6 +15,7 @@ import Journal from './components/Journal';
 import JournalCalendar from './components/JournalCalendar';
 import WelcomePage from './components/WelcomePage';
 import Entry from './components/Entry';
+import UserProfile from './components/UserProfile';
 import {AntDesign,Entypo} from 'react-native-vector-icons';
 import { useState } from 'react';
 import MyDrawer from './components/MyDrawer';
@@ -56,6 +57,7 @@ export default function App() {
         <Stack.Screen name='CreateThread' component={CreateThread} options={{title: 'Create',  headerShown:false}}/>
         <Stack.Screen name="MyTabs" component={MyTabs} options={{headerShown:false, title: 'Forum'}}/>
         <Stack.Screen name="Settings" component={Settings} options={{title: 'Settings'}}/>
+    <Stack.Screen name="Profile" component={UserProfile} options={{headerShown:false, title: 'Profile'}}/>
      </Stack.Navigator>
     </NavigationContainer>
   );
