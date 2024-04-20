@@ -7,7 +7,7 @@ const screenWidth = Dimensions.get('window').width
 const screenHeight = Dimensions.get('window').height
 
 const Scale = ({route, navigation}) => {
-  const {email, username}  = route.params;
+  const email  = route.params?.email;
 
   const [sliderValue, setSliderValue] = useState(() => route.params?.anxietyScore? route.params.anxietyScore: 5);
 
@@ -19,7 +19,7 @@ const Scale = ({route, navigation}) => {
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.close}>
-        <TouchableOpacity style={{marginRight: screenWidth*0.05}}onPress={() => navigation.navigate('Home', {email: email, username: username})}>
+        <TouchableOpacity style={{marginRight: screenWidth*0.05}}onPress={() => navigation.navigate('Home', {email: email})}>
           <AntDesign name='close' size={35}></AntDesign>
         </TouchableOpacity>
       </View>

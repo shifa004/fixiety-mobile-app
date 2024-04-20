@@ -1,3 +1,4 @@
+import 'react-native-gesture-handler';
 import { SafeAreaView, StyleSheet,Dimensions, Image,Text, TextInput, View, Button, TouchableOpacity, ScrollView } from 'react-native';
 import { NavigationContainer, useNavigationContainerRef } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
@@ -16,6 +17,7 @@ import WelcomePage from './components/WelcomePage';
 import Entry from './components/Entry';
 import {AntDesign,Entypo} from 'react-native-vector-icons';
 import { useState } from 'react';
+import MyDrawer from './components/MyDrawer';
 
 const screenWidth = Dimensions.get('window').width
 const screenHeight = Dimensions.get('window').height
@@ -40,7 +42,7 @@ export default function App() {
         <Stack.Screen name="WelcomePage" component={WelcomePage} options={{headerShown: false}}/>
         <Stack.Screen name='Login' component={Login} options={{headerShown: false}}/>
         <Stack.Screen name='Register' component={Register} options={{headerShown: false}}/>
-        <Stack.Screen name='Home' component={Home} options={{title: 'Home'}} />
+        <Stack.Screen name='MyDrawer' component={MyDrawer} options={{headerShown: false}} />
         <Stack.Screen name='Scale' component={Scale} options={{title: 'Scale', headerShown:false}}/>
         <Stack.Screen name='Feel' component={Feel} options={{title: 'Feel', headerShown:false}}/>
         <Stack.Screen name='Journal' component={Journal} options={{title: 'Journal', headerShown:false}}/>

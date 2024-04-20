@@ -1,24 +1,38 @@
 import { StyleSheet, SafeAreaView, TouchableOpacity, View, Text, Dimensions, Image, ScrollView } from 'react-native'
 import React from 'react'
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
+import { auth } from './config'; 
 
 const screenWidth = Dimensions.get('window').width
 const screenHeight = Dimensions.get('window').height
 
 const Home = ({route , navigation}) => {
-    const email = route.params?.email;
-    const username = route.params?.username;
-    console.log("in home", email, username)
+  
+  const [currentUser, setCurrentUser] = useState(null);
+
+  useEffect(() => {
+    const unsubscribe = auth.onAuthStateChanged(user => {
+      if (user) {
+        // User is signed in
+        setCurrentUser(user);
+      } else {
+        // No user is signed in
+        setCurrentUser(null);
+      }
+    });  return () => unsubscribe();
+  }, []);
+
     return (
     <SafeAreaView style={styles.container}>
       <ScrollView>
-      <TouchableOpacity style={styles.section} onPress={() => navigation.navigate('JournalCalendar',  {email: email, username: username})}>
+      
+      <TouchableOpacity style={styles.section} onPress={() => navigation.navigate('JournalCalendar',  {email: currentUser.email})}>
         <Text style={styles.heading}>Personal Anxiety Journal</Text>
         <Text style={styles.description}>Log your daily anxiety levels and activities to identify potential triggers.</Text>
         <Image source={require("../assets/journal.png")} style={{width:200, height:200}}/>
       </TouchableOpacity>
 
-      <TouchableOpacity style={styles.section} onPress={() => navigation.navigate('MyTabs', {email: email})}>
+      <TouchableOpacity style={styles.section} onPress={() => navigation.navigate('MyTabs', {email: currentUser.email})}>
         <Text style={styles.heading}>Community Forum</Text>
         <Text style={styles.description}>Join discussions with peers and share coping techniques.</Text>
         <Image source={require("../assets/community.png")} style={{width:200, height:200}}/>

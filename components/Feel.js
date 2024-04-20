@@ -22,7 +22,7 @@ const Feel = ({route, navigation}) => {
     return date + '-' + month + '-' + year;//format: d-m-y;
   }
 
-  const {email, username}  = route.params;
+  const email  = route.params?.email;
 
   const [selectedEmoji, setSelectedEmoji] = useState(() => route.params?.feel? route.params.feel: "");
   const anxietyScore = route.params.anxietyScore
@@ -51,7 +51,7 @@ const Feel = ({route, navigation}) => {
       <TouchableOpacity style={{marginLeft: screenWidth*0.05}} onPress={() => navigation.navigate({ name: 'Scale', params: { anxietyScore: anxietyScore }, merge: true })}>
           <AntDesign name='arrowleft' size={35}></AntDesign>
         </TouchableOpacity>
-        <TouchableOpacity style={{marginRight: screenWidth*0.05}} onPress={() => navigation.navigate('Home', {email: email, username: username})}>
+        <TouchableOpacity style={{marginRight: screenWidth*0.05}} onPress={() => navigation.navigate('Home', {email: email})}>
           <AntDesign name='close' size={35}></AntDesign>
         </TouchableOpacity>
       </View>

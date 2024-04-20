@@ -9,7 +9,7 @@ const screenWidth = Dimensions.get('window').width
 const screenHeight = Dimensions.get('window').height
 
 const Journal = ({ route, navigation }) => {
-  const {email, username}  = route.params;
+  const email = route.params?.email;
   const [entry, setEntry] = useState('');
   const [disabled,setDisabled]=useState(true);
   const [isModalVisible, setModalVisible] = useState(false);
@@ -86,7 +86,7 @@ const Journal = ({ route, navigation }) => {
             <AntDesign name='arrowleft' size={35}></AntDesign>
         </TouchableOpacity>
         <Text>{getCurrentDate()}</Text>
-        <TouchableOpacity style={{marginRight: screenWidth*0.05}} onPress={() => navigation.navigate('Home', {email: email, username: username})}>
+        <TouchableOpacity style={{marginRight: screenWidth*0.05}} onPress={() => navigation.navigate('Home', {email: email})}>
             <AntDesign name='close' size={35}></AntDesign>
         </TouchableOpacity>
         </View>

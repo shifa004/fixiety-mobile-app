@@ -10,7 +10,7 @@ import { keyboardProps } from 'react-native-web/dist/cjs/modules/forwardedProps'
 const screenWidth = Dimensions.get('window').width
 const screenHeight = Dimensions.get('window').height
 
-const ForumReplies = ({ data, navigation, index, key, dID, email }) => {
+const ForumReplies = ({ data, navigation, index, dID, email }) => {
     useEffect(() => {
         readLikes()
     },)

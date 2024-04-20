@@ -36,7 +36,8 @@ const Login = ({navigation}) => {
         }
         console.log('Logged in')
         setSignedIn(true)
-        navigation.navigate('Home', {email: docSnap.data().email, username: docSnap.data().username})
+        console.log("Email retrieved from docSnap:", docSnap.data().email);
+        navigation.navigate('MyDrawer', {email: docSnap.data().email})
     })
     .catch((error) => {console.log(error.message);
     setSignedIn(false)})
