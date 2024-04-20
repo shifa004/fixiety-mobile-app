@@ -15,7 +15,7 @@ const Scale = ({route, navigation}) => {
     navigation.navigate({ name: 'Feel', params: { anxietyScore: sliderValue }, merge: true })
   }
 
-  console.log(sliderValue)
+  // console.log(sliderValue)
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.close}>

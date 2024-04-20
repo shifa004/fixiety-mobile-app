@@ -50,16 +50,17 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   button: {
-    height: screenHeight*0.055,
-    width: screenWidth*0.4,
-    borderRadius: 25,
+    height: screenHeight*0.07,
+    width: screenWidth*0.5,
+    borderRadius: 10,
+    marginTop: screenHeight*0.01,
     marginBottom: screenHeight*0.02,
     justifyContent:"center"
   },
   buttonText: {
     textAlign: 'center',
     color: '#FFFFFF',
-    fontSize: screenWidth*0.04,
+    fontSize: screenWidth*0.05,
     fontWeight: 'bold',
   }
 });

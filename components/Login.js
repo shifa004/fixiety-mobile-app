@@ -1,8 +1,11 @@
-import { StyleSheet, TextInput, View,TouchableOpacity,Text,KeyboardAvoidingView, Alert } from 'react-native'
-import React,{useEffect, useState} from 'react';
+import React, { useState, useEffect } from 'react';
+import { StyleSheet, TextInput, View, TouchableOpacity, Text, KeyboardAvoidingView, Platform, Image, Alert, Dimensions } from 'react-native';
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
 import { db, auth } from './config';
 import { doc, getDoc } from "firebase/firestore";
+
+const screenWidth = Dimensions.get('window').width
+const screenHeight = Dimensions.get('window').height
 
 const Login = ({navigation}) => {
 
@@ -33,32 +36,57 @@ const Login = ({navigation}) => {
         } else {
         // doc.data() will be undefined in this case
         console.log("No such document!");
+        Alert.alert('Error', 'Invalid email or password');
+        setSignedIn(false);
         }
         console.log('Logged in')
         setSignedIn(true)
         console.log("Email retrieved from docSnap:", docSnap.data().email);
         navigation.navigate('MyDrawer', {email: docSnap.data().email})
     })
-    .catch((error) => {console.log(error.message);
-    setSignedIn(false)})
+    .catch((error) => {
+      console.log(error.message);
+      setSignedIn(false)
+      Alert.alert('Error', 'Login failed. Please try again.');
+    })
   }
   
   return (
-    <KeyboardAvoidingView style={styles.container}>
+    <KeyboardAvoidingView behavior={Platform.OS == 'ios' ? "padding" : "height"} style={styles.container}>
+      <View style={styles.logoContainer}>
+        <Image
+          source={require('../assets/login.png')} 
+          style={styles.logo}
+        />
+        <Text style={styles.title}>Welcome back</Text>
+        <Text style={styles.subtitle}>sign in to access your account</Text>
+      </View>
+
       <View style={styles.inputContainer}>
-        <TextInput placeholder='Email' value={email} onChangeText={text =>  setEmail(text)} style={styles.input} autoCorrect={false} autoCapitalize={'none'}/>
-        <TextInput placeholder='Password' value={password} onChangeText={text =>  setPassword(text)} style={styles.input}secureTextEntry/>
+        <TextInput
+          placeholder='Enter your email'
+          value={email}
+          onChangeText={text => setEmail(text)}
+          style={styles.input}
+          autoCorrect={false}
+          autoCapitalize='none'
+          keyboardType='email-address'
+        />
+        <TextInput
+          placeholder='Password'
+          value={password}
+          onChangeText={text => setPassword(text)}
+          style={styles.input}
+          secureTextEntry
+        />
       </View>
-      <View>
-      </View>
+
       <View style={styles.buttonContainer}>
         <TouchableOpacity style={styles.button} onPress={handleLogin}>
-          <Text style={styles.buttonText}>Login</Text>
+          <Text style={styles.buttonText}>Next</Text>
         </TouchableOpacity>
-
-        <Text>Don't have an account?</Text>
-        <TouchableOpacity style={[styles.button, styles.buttonOutLine]} onPress={handleRegister}>
-          <Text style={[styles.buttonText, styles.buttonOutLineText]}>Register</Text>
+        <TouchableOpacity onPress={handleRegister}>
+          <Text style={styles.registerText}>New Member? <Text style={styles.registerNowText}>Register now</Text></Text>
         </TouchableOpacity>
       </View>
     </KeyboardAvoidingView>
@@ -70,51 +98,69 @@ export default Login
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center'
-  },
-  input: {
-    fontSize: 18,
     backgroundColor: 'white',
-    paddingHorizontal: 10,
-    paddingVertical: 15,
-    borderRadius: 10,
-    marginTop: 5
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  logoContainer: {
+    alignItems: 'center',
+    marginBottom: screenHeight*0.03,
+  },
+  logo: {
+    height: screenHeight*0.4,
+    width: screenWidth*0.9
+  },
+  title: {
+    fontSize: screenWidth*0.08,
+    fontWeight: 'bold',
+    color: '#01377D',
+  },
+  subtitle: {
+    fontSize: screenWidth*0.04,
+    color: '#666',
   },
   inputContainer: {
-    width: '80%'
+    width: screenWidth*0.8,
+  },
+  input: {
+    backgroundColor: '#fff',
+    paddingHorizontal: screenWidth*0.04,
+    paddingVertical: screenHeight*0.015,
+    borderRadius: 10,
+    marginTop: screenHeight*0.03,
+    fontSize: screenWidth*0.04,
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    elevation: 5,
   },
   button: {
-    width: '100%',
-    alignItems: 'center',
-    backgroundColor: '#0782F9',
+    backgroundColor: '#89ABE3', // Reddish color for the button
+    padding: screenWidth*0.035,
     borderRadius: 10,
-    padding: 15
+    marginTop: screenHeight*0.03,
+    width: screenWidth*0.8,
+    alignItems: 'center',
   },
   buttonContainer: {
-    width: '60%',
-    justifyContent: 'center',
+    width: screenWidth*0.6,
     alignItems: 'center',
-    marginTop: 40
-  },
-  buttonOutLine: {
-    width: '100%',
-    alignItems: 'center',
-    backgroundColor: 'white',
-    borderRadius: 10,
-    padding: 15,
-    marginTop: 5,
-    borderColor: '#0782F9',
-    borderWidth: 2
   },
   buttonText: {
-    fontWeight: '700',
-    color: 'white',
-    fontSize: 16
+    color: '#fff',
+    fontSize: screenWidth*0.045,
+    fontWeight: 'bold',
   },
-  buttonOutLineText: {
-    fontWeight: '700',
-    color: '#0782F9',
-    fontSize: 16
-  }
-})
+  registerText: {
+    marginTop: screenHeight*0.03,
+    color: '#666',
+  },
+  registerNowText: {
+    color: '#01377D',
+    fontWeight: 'bold',
+  },
+});

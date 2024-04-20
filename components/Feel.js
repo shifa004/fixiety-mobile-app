@@ -7,9 +7,9 @@ const screenWidth = Dimensions.get('window').width
 const screenHeight = Dimensions.get('window').height
 
 const Feel = ({route, navigation}) => {
-  useEffect( () => {
-    console.log(anxietyScore)
-  }, [])
+  // useEffect( () => {
+  //   console.log(anxietyScore)
+  // }, [])
 
   const getCurrentDate=()=>{
  
@@ -17,8 +17,6 @@ const Feel = ({route, navigation}) => {
     var month = new Date().getMonth() + 1;
     var year = new Date().getFullYear();
 
-    //Alert.alert(date + '-' + month + '-' + year);
-    // You can turn it in to your desired format
     return date + '-' + month + '-' + year;//format: d-m-y;
   }
 
@@ -35,7 +33,7 @@ const Feel = ({route, navigation}) => {
 
   const [disabled,setDisabled]=useState(true)
 
-  console.log(selectedEmoji)
+  // console.log(selectedEmoji)
   const handleFeel = () => {
     navigation.navigate({ name: 'Journal', params: { anxietyScore: anxietyScore, feel: selectedEmoji }, merge: true })
   }
