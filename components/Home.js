@@ -41,7 +41,7 @@ const Home = ({route , navigation}) => {
       <TouchableOpacity style={styles.section}>
         <Text style={styles.heading}>Educational Content</Text>
         <Text style={styles.description}>Learn about anxiety and discover practical methods to handle it.</Text>
-        {/* Icon for the educational content could be added here */}
+        <Image source={require("../assets/education.png")} style={{width:200, height:200}}/>
       </TouchableOpacity>
       </ScrollView>
     </SafeAreaView>
@@ -55,34 +55,23 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems:'center',
     justifyContent: 'center',
-    backgroundColor: '#F0F8FF', // AliceBlue color as an example for a calming background
+    backgroundColor: 'white',
   },
   section: {
-    margin: 20,
-    padding: 20,
-    backgroundColor: '#E6E6FA', // Lavender color for a soothing effect on each section
+    marginHorizontal: screenWidth*0.06,
+    marginVertical: screenWidth*0.04,
+    padding: screenHeight*0.025,
+    backgroundColor: '#e8effa',
     borderRadius: 10,
   },
   heading: {
-    fontSize: 22,
+    fontSize: screenWidth*0.06,
     fontWeight: 'bold',
-    marginBottom: 10,
-    color: '#3C3C3C', // Dark grey for text to ensure readability
-  },
-  description: {
-    fontSize: 16,
+    marginBottom: screenHeight*0.02,
     color: '#3C3C3C',
   },
-  button: {
-    backgroundColor: '#7FFFD4', // Aquamarine for a welcoming button color
-    padding: 15,
-    borderRadius: 10,
-    margin: 20,
-  },
-  buttonText: {
-    textAlign: 'center',
-    color: '#FFFFFF',
-    fontSize: 18,
-    fontWeight: 'bold',
+  description: {
+    fontSize: screenWidth*0.04,
+    color: '#3C3C3C',
   }
 });

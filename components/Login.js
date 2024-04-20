@@ -139,7 +139,7 @@ const styles = StyleSheet.create({
     elevation: 5,
   },
   button: {
-    backgroundColor: '#89ABE3', // Reddish color for the button
+    backgroundColor: '#89ABE3',
     padding: screenWidth*0.035,
     borderRadius: 10,
     marginTop: screenHeight*0.03,
