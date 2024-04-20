@@ -1,18 +1,38 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, TextInput, StyleSheet, Button, SafeAreaView, Dimensions, TouchableOpacity, Text, KeyboardAvoidingView, Platform, ScrollView } from 'react-native';
 import {AntDesign} from 'react-native-vector-icons';
-import {doc, setDoc, addDoc, collection} from "firebase/firestore";
-import { db } from './config';
+import {doc, setDoc, collection, getDocs, query, where} from "firebase/firestore";
+import { db, auth } from './config';
 import Success from './Success';
+
 
 const screenWidth = Dimensions.get('window').width
 const screenHeight = Dimensions.get('window').height
 
 const Journal = ({ route, navigation }) => {
-  const email = route.params?.email;
   const [entry, setEntry] = useState('');
   const [disabled,setDisabled]=useState(true);
   const [isModalVisible, setModalVisible] = useState(false);
+  const [username, setUsername] = useState();
+
+  const [currentUser, setCurrentUser] = useState(null);
+
+  useEffect(() => {
+    const unsubscribe = auth.onAuthStateChanged(user => {
+      if (user) {
+        // User is signed in
+        setCurrentUser(user);
+      } else {
+        // No user is signed in
+        setCurrentUser(null);
+      }
+    });  return () => unsubscribe();
+  }, []);
+
+  useEffect(()=>{
+    getName()
+    return ()=>{}
+  },) 
 
   const changeInput = (e) => {
     if (e === '') {
@@ -45,20 +65,22 @@ const Journal = ({ route, navigation }) => {
     return date + '-' + month + '-' + year;
   }
 
-  const mySet = async() => {
-    const docRef = doc(db, "users", studentId)
-    await setDoc(docRef, { name: name, GPA: GPA, }, {merge:true})
-    .then(() => { console.log('data submitted') 
-    setStudentID('')
-    setName('')
-    setGPA('')})
-    .catch((error) => { console.log(error.message) })        
-}
+  const getName = async () => {
+    const q = query(collection(db, "accounts"), where("email", "==", currentUser.email));
+    const docs = await getDocs(q);
+    let x = ''
+    docs.forEach((doc) => {
+      x = doc.data().username
+    });
+    setUsername(x)
+  }
 
   async function addEntry() {
       const currentDate = formatDate();
       const docRef = doc(db, "entries", currentDate)
+      let name = username;
       await setDoc(docRef, {
+        username: name,
         score: route.params.anxietyScore,
         feel: route.params.feel,
         entry: entry,
@@ -76,9 +98,10 @@ const Journal = ({ route, navigation }) => {
 
   const closeModal = () => {
     setModalVisible(false);
-    navigation.navigate('JournalCalendar')
+    navigation.navigate('JournalCalendar', {username: username})
   };
 
+  getName()
   return (
     <KeyboardAvoidingView style={styles.container} behavior={Platform.OS == 'ios' ? "padding" : "height"}>  
         <View style={styles.close}>

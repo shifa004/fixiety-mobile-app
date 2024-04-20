@@ -1,4 +1,4 @@
-import { StyleSheet, TextInput, Dimensions, View,TouchableOpacity,Text,KeyboardAvoidingView, Alert } from 'react-native'
+import { StyleSheet, TextInput, Dimensions, View,TouchableOpacity,Text, KeyboardAvoidingView, Platform, Alert , Image} from 'react-native'
 import React,{useEffect, useState} from 'react';
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { setDoc, doc } from "firebase/firestore";
@@ -46,27 +46,65 @@ const Register = ({navigation}) => {
   }
   
   return (
-    <KeyboardAvoidingView style={styles.container}>
-      <Text style={styles.title}>Create Your Account</Text>
+    <KeyboardAvoidingView behavior={Platform.OS == 'ios' ? "padding" : "height"} style={styles.container}>
+      <View style={styles.headerContainer}>
+        <Image
+          source={require('../assets/register.png')} // Replace with your graphic image path
+          style={styles.headerGraphic}
+        />
+        <Text style={styles.title}>Get Started</Text>
+        <Text style={styles.subtitle}>by creating a free account.</Text>
+      </View>
+
       <View style={styles.inputContainer}>
-        <TextInput placeholder='First Name' value={firstName} onChangeText={text =>  setFirst(text)} style={styles.input} autoCorrect={false} autoCapitalize={'none'}/>
-        <TextInput placeholder='Last Name' value={lastName} onChangeText={text =>  setLast(text)} style={styles.input} autoCorrect={false} autoCapitalize={'none'}/>
-        <TextInput placeholder='Username' value={username} onChangeText={text =>  setUsername(text)} style={styles.input} autoCorrect={false} autoCapitalize={'none'}/>
-        <TextInput placeholder='Email' value={email} onChangeText={text =>  setEmail(text)} style={styles.input} autoCorrect={false} autoCapitalize={'none'}/>
-        <TextInput placeholder='Password' value={password} onChangeText={text =>  setPassword(text)} style={styles.input}secureTextEntry/>
+        <TextInput
+          placeholder='First Name'
+          value={firstName}
+          onChangeText={(text) => {setFirst(text)}}
+          style={styles.input}
+        />
+        <TextInput
+          placeholder='Last Name'
+          value={lastName}
+          onChangeText={(text) => {setLast(text)}}
+          style={styles.input}
+        />
+        <TextInput
+          placeholder='Userame'
+          value={username}
+          onChangeText={(text) => {setUsername(text)}}
+          autoCorrect={false}
+          autoCapitalize='none'
+          style={styles.input}
+        />
+        <TextInput
+          placeholder='Email'
+          value={email}
+          onChangeText={text => setEmail(text)}
+          style={styles.input}
+          autoCorrect={false}
+          autoCapitalize='none'
+          keyboardType='email-address'
+        />
+        <TextInput
+          placeholder='Password'
+          value={password}
+          onChangeText={text => setPassword(text)}
+          style={styles.input}
+          autoCorrect={false}
+          autoCapitalize='none'
+          secureTextEntry
+        />
       </View>
-      <View>
-      </View>
-      <View style={styles.buttonContainer}>
-        
-        <TouchableOpacity style={[styles.button, styles.buttonOutLine]} onPress={handleRegister}>
-          <Text style={[styles.buttonText, styles.buttonOutLineText]}>Register</Text>
-        </TouchableOpacity>
 
-        <Text> Have an account?</Text>
+      <TouchableOpacity style={styles.button} onPress={handleRegister}>
+        <Text style={styles.buttonText}>Next</Text>
+      </TouchableOpacity>
 
-        <TouchableOpacity style={styles.button} onPress={handleLogin}>
-          <Text style={styles.buttonText}>Login</Text>
+      <View style={styles.footerContainer}>
+        <Text style={styles.footerText}>Already a member?</Text>
+        <TouchableOpacity onPress={handleLogin}>
+          <Text style={styles.loginText}> Log In</Text>
         </TouchableOpacity>
       </View>
     </KeyboardAvoidingView>
@@ -82,55 +120,59 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: '#f5f5f5'
   },
+  headerContainer: {
+    alignItems: 'center',
+    marginBottom: screenHeight*0.02,
+  },
+  headerGraphic: {
+    height: screenHeight*0.2,
+    width: screenWidth*0.8,
+  },
   title: {
-    fontSize: 24,
-    fontWeight: '700',
-    color: '#333',
-    marginBottom: screenHeight*0.04,
+    fontSize: screenWidth*0.07,
+    fontWeight: 'bold',
+    color: '#01377D',
+  },
+  subtitle: {
+    fontSize: screenWidth*0.04,
+    color: '#666',
   },
   input: {
-    fontSize: 18,
-    backgroundColor: 'white',
-    paddingHorizontal: 10,
-    paddingVertical: 15,
+    backgroundColor: '#fff',
+    fontSize: screenWidth*0.04,
+    paddingHorizontal: screenWidth*0.04,
+    paddingVertical: screenHeight*0.015,
     borderRadius: 10,
-    marginTop: 5
+    marginTop: screenHeight*0.02
   },
   inputContainer: {
-    width: '80%',
+    width: screenWidth*0.8,
     marginBottom: screenHeight*0.04
   },
+  footerContainer: {
+    flexDirection:'row',
+    justifyContent:'center',
+    alignItems: 'center',
+    marginTop: screenHeight*0.02,
+  },
+  footerText: {
+    color: '#666',
+    fontSize: 14,
+  },
+  loginText: {
+    color: '#01377D',
+    fontWeight: 'bold',
+  },
   button: {
-    width: '100%',
+    width: screenWidth*0.8,
     alignItems: 'center',
-    backgroundColor: '#0782F9',
+    backgroundColor: '#01377D',
     borderRadius: 10,
-    padding: 15
-  },
-  buttonContainer: {
-    width: '60%',
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginTop: 40
-  },
-  buttonOutLine: {
-    width: '100%',
-    alignItems: 'center',
-    backgroundColor: 'white',
-    borderRadius: 10,
-    padding: 15,
-    marginTop: 5,
-    borderColor: '#0782F9',
-    borderWidth: 2
+    padding: screenWidth*0.035,
   },
   buttonText: {
     fontWeight: '700',
     color: 'white',
-    fontSize: 16
-  },
-  buttonOutLineText: {
-    fontWeight: '700',
-    color: '#0782F9',
-    fontSize: 16
+    fontSize: screenWidth*0.04
   }
 })

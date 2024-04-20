@@ -10,9 +10,7 @@ const screenWidth = Dimensions.get('window').width
 const screenHeight = Dimensions.get('window').height
 
 const Entry = ({route, navigation}) => {
-    const ent = route.params.e
-    console.log(ent)
-
+    const ent = route.params?.e
     const formatDate = (dateString) => {
       const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
       const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
