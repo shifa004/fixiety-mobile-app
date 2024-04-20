@@ -54,10 +54,7 @@ const JournalCalendar = ({route,navigation}) => {
 
   return (
     <SafeAreaView style ={styles.container}>
-      <ScrollView contentContainerStyle ={styles.all}> 
-      <View style={{alignItems:'center', marginTop: screenHeight*0.2}}>
-        <Text>All Journal Entries</Text>
-      </View>       
+      <ScrollView contentContainerStyle ={styles.all}>
         {(entries.map((x, i) => {
           const e = findEmojiByLabel(x.feel);
           return (

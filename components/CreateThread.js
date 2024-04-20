@@ -183,7 +183,6 @@ const styles = StyleSheet.create({
         marginLeft: screenWidth * 0.04,
         height: screenWidth * 0.08,
         backgroundColor: '#01377D',
-
         borderRadius: 10,
         alignItems: 'center',
         justifyContent: 'center',

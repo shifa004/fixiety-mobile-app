@@ -1,8 +1,12 @@
-import { StyleSheet, TextInput, View,TouchableOpacity,Text,KeyboardAvoidingView, Alert } from 'react-native'
+import { StyleSheet, TextInput, Dimensions, View,TouchableOpacity,Text,KeyboardAvoidingView, Alert } from 'react-native'
 import React,{useEffect, useState} from 'react';
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { setDoc, doc } from "firebase/firestore";
 import { db, auth } from './config';
+import { ScreenHeight } from '@rneui/base';
+
+const screenWidth = Dimensions.get('window').width
+const screenHeight = Dimensions.get('window').height
 
 const Register = ({navigation}) => {
   useEffect(()=> setSignedIn(false),[])
@@ -11,6 +15,8 @@ const Register = ({navigation}) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [username, setUsername] = useState("");
+  const [lastName, setLast] = useState("");
+  const [firstName, setFirst] = useState("");
   
   const handleRegister = () => {
     if (!email || !password || !username) {
@@ -41,8 +47,11 @@ const Register = ({navigation}) => {
   
   return (
     <KeyboardAvoidingView style={styles.container}>
+      <Text style={styles.title}>Create Your Account</Text>
       <View style={styles.inputContainer}>
-      <TextInput placeholder='Username' value={username} onChangeText={text =>  setUsername(text)} style={styles.input} autoCorrect={false} autoCapitalize={'none'}/>
+        <TextInput placeholder='First Name' value={firstName} onChangeText={text =>  setFirst(text)} style={styles.input} autoCorrect={false} autoCapitalize={'none'}/>
+        <TextInput placeholder='Last Name' value={lastName} onChangeText={text =>  setLast(text)} style={styles.input} autoCorrect={false} autoCapitalize={'none'}/>
+        <TextInput placeholder='Username' value={username} onChangeText={text =>  setUsername(text)} style={styles.input} autoCorrect={false} autoCapitalize={'none'}/>
         <TextInput placeholder='Email' value={email} onChangeText={text =>  setEmail(text)} style={styles.input} autoCorrect={false} autoCapitalize={'none'}/>
         <TextInput placeholder='Password' value={password} onChangeText={text =>  setPassword(text)} style={styles.input}secureTextEntry/>
       </View>
@@ -70,7 +79,14 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: 'center',
-    alignItems: 'center'
+    alignItems: 'center',
+    backgroundColor: '#f5f5f5'
+  },
+  title: {
+    fontSize: 24,
+    fontWeight: '700',
+    color: '#333',
+    marginBottom: screenHeight*0.04,
   },
   input: {
     fontSize: 18,
@@ -81,7 +97,8 @@ const styles = StyleSheet.create({
     marginTop: 5
   },
   inputContainer: {
-    width: '80%'
+    width: '80%',
+    marginBottom: screenHeight*0.04
   },
   button: {
     width: '100%',

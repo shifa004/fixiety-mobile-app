@@ -91,7 +91,8 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     padding: 20,
     margin: screenWidth*0.08,
-    height: screenHeight*0.6
+    minHeight: screenHeight*0.6,
+    textAlign:'justify'
   },
   inputText: {
     fontSize: 16,
