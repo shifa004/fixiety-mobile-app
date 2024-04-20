@@ -57,7 +57,7 @@ export default function App() {
         <Stack.Screen name='CreateThread' component={CreateThread} options={{title: 'Create',  headerShown:false}}/>
         <Stack.Screen name="MyTabs" component={MyTabs} options={{headerShown:false, title: 'Forum'}}/>
         <Stack.Screen name="Settings" component={Settings} options={{title: 'Settings'}}/>
-    <Stack.Screen name="Profile" component={UserProfile} options={{headerShown:false, title: 'Profile'}}/>
+        <Stack.Screen name="UserProfile" component={UserProfile} options={{title: 'Profile'}}/>
      </Stack.Navigator>
     </NavigationContainer>
   );
