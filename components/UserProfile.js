@@ -179,8 +179,15 @@ const UserProfiles = ({ route, navigation }) => {
     >
       <ScrollView>
         <TouchableOpacity onPress={pickImage} style={styles.header}>
-          <Avatar source={{ uri: picture }} size={screenWidth * 0.33}
-            rounded />
+        {url ? (
+            <Avatar source={{ uri: url }} style={styles.image} />
+          ) : (
+            <Avatar
+              source={require("../assets/profile.png")}
+              size={screenWidth * 0.33}
+              rounded
+            />
+          )}
           <Text style={{ color: "grey", marginTop: screenWidth * 0.03 }}>
             Click on the image to change
           </Text>
