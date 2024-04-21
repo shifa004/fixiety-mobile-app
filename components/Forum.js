@@ -15,12 +15,12 @@ const Forum = ({ route, navigation }) => {
     //     readAll()
     //     return ()=>{}
     // }
-    //   ,[]) 
+    //   ,) 
       useEffect(()=>{
         readAll()
         return ()=>{}
     }
-      ,[route.params?.check]) 
+      ,) 
     const [username, setUsername] = useState('John')
     const [title, setTitle] = useState('Anxiety')
     const [detail, setDetail] = useState('My question is bla bla')
