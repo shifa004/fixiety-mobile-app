@@ -72,7 +72,6 @@ const UserProfiles = ({ route, navigation }) => {
         console.log(user);
         console.log("this is uiddddddddd", uid);
         console.log("this is emaaaaaail", username);
-        getDetails();
       } else {
         // No user is signed in
         setCurrentUser(null);
@@ -80,7 +79,7 @@ const UserProfiles = ({ route, navigation }) => {
     });
 
     return () => unsubscribe();
-  }, []);
+  },);
 
   const getDetails = async () => {
     const q = query(collection(db, "accounts"), where("email", "==", username));
@@ -90,7 +89,7 @@ const UserProfiles = ({ route, navigation }) => {
       console.log(doc.id, " => ", doc.data());
       setFname(doc.data().username);
       setGender(doc.data().gender ? doc.data().gender : "");
-      setPicture(doc.data().filename ? doc.data().filename : false);
+      setPicture(doc.data().filename ? doc.data().filename : "https://firebasestorage.googleapis.com/v0/b/myapp1-40822.appspot.com/o/profile.png?alt=media&token=47e24f6b-ffeb-43d3-bc75-d47facbd1746");
       console.log("this is genderrrr", gender);
       console.log("this is naaaameee", fname);
       console.log("tjos os pictureee", picture);
@@ -114,7 +113,7 @@ const UserProfiles = ({ route, navigation }) => {
           email: currentUser.email,
           gender: gender,
           username: fname,
-          filename: url,
+          filename: picture,
         },
         { merge: true }
       );
@@ -156,8 +155,16 @@ const UserProfiles = ({ route, navigation }) => {
       console.log("uploaded")
     );
     await getDownloadURL(imgRef)
-      .then((x) => {
-        setUrl(x);
+      .then(async(x) => {
+        const user = doc(db, "accounts", uid);
+        await updateDoc(
+          user,
+          {
+            filename: x,
+          },
+          { merge: true }
+        );
+        setPicture(x)
       })
       .catch((e) => alert(e.message));
   };
@@ -172,16 +179,8 @@ const UserProfiles = ({ route, navigation }) => {
     >
       <ScrollView>
         <TouchableOpacity onPress={pickImage} style={styles.header}>
-          {console.log(url)}
-          {url ? (
-            <Avatar source={{ uri: url }} style={styles.image} />
-          ) : (
-            <Avatar
-              source={require("../assets/profile.png")}
-              size={screenWidth * 0.33}
-              rounded
-            />
-          )}
+          <Avatar source={{ uri: picture }} size={screenWidth * 0.33}
+            rounded />
           <Text style={{ color: "grey", marginTop: screenWidth * 0.03 }}>
             Click on the image to change
           </Text>
@@ -210,7 +209,7 @@ const UserProfiles = ({ route, navigation }) => {
           <TextInput
             value={fname}
             style={styles.input}
-            onChangeText={(text) => setFname(text)}
+            onChangeText={setFname}
           ></TextInput>
         </View>
 
